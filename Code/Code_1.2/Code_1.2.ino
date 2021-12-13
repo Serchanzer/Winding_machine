@@ -58,8 +58,8 @@ void loop() {
   }
   else if (key == '#'){
     lcd.clear();
-      lcd.print("Enter turns:");
-      lcd.setCursor(0,1);
+    lcd.print("Enter turns:");
+    lcd.setCursor(0,1);
   }
   else {
     MC ();
