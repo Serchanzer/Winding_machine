@@ -3,11 +3,11 @@
 #include <Keypad.h>    
 //-------------------------------------------------------------------------------------------------------
 // 1 двигатель
-const int STEP1=;
-const int DIR1=;
+const int STEP1=2;
+const int DIR1=13;
 // 2 двигатель
-const int STEP2=;
-const int DIR2=;
+const int STEP2=3;
+const int DIR2=4;
 //-------------------------------------------------------------------------------------------------------
 const byte ROWS = 4;   // Количество рядов в панели
 const byte COLS = 4;   // Количество строк 
@@ -18,8 +18,8 @@ char keys[ROWS][COLS] =
   {'7','8','9','C'},
   {'*','0','#','D'}
 };
-byte rowPins[ROWS] = {, , , }; // Выводы, подключение к строкам
-byte colPins[COLS] = {, , , }; // Выводы, подключение к столбцам  
+byte rowPins[ROWS] = {12, 11, 10, 9}; // Выводы, подключение к строкам
+byte colPins[COLS] = {8, 7, 6, 5}; // Выводы, подключение к столбцам  
  
 Keypad keypad = Keypad(makeKeymap(keys), rowPins, colPins, ROWS, COLS);  
 LiquidCrystal_PCF8574 lcd(0x27);
