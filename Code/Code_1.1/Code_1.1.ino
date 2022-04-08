@@ -3,11 +3,11 @@
 #include <Keypad.h>    
 //-------------------------------------------------------------------------------------------------------
 // 1 двигатель
-const int STEP1=;
-const int DIR1=;
+const int STEP1=6;
+const int DIR1=7;
 // 2 двигатель
-const int STEP2=;
-const int DIR2=;
+const int STEP2=8;
+const int DIR2=9;
 //-------------------------------------------------------------------------------------------------------
 const byte ROWS = 4;   // Количество рядов в панели
 const byte COLS = 4;   // Количество строк 
@@ -18,14 +18,16 @@ char keys[ROWS][COLS] =
   {'7','8','9','C'},
   {'*','0','#','D'}
 };
-byte rowPins[ROWS] = {A0, A1, A2, A3}; // Выводы, подключение к строкам
-byte colPins[COLS] = {A4, A5, A6, A7}; // Выводы, подключение к столбцам  
+byte rowPins[ROWS] = {2, 3, 4, 5}; // Выводы, подключение к строкам
+byte colPins[COLS] = {10, 11, 12, 13}; // Выводы, подключение к столбцам  
  
 Keypad keypad = Keypad(makeKeymap(keys), rowPins, colPins, ROWS, COLS);  
 LiquidCrystal_PCF8574 lcd(0x27);
-char KEY = '1';
+char KEY = ' ';
 //-------------------------------------------------------------------------------------------------------
 void setup() {
+  pinMode(A3, OUTPUT);
+  analogWrite(A3, 255);
   // режим для STEP и DIR как OUTPUT
   pinMode(STEP1, OUTPUT);
   pinMode(DIR1, OUTPUT);
@@ -52,7 +54,7 @@ void loop() {
   lcd.print("Apply template?");
   lcd.setCursor(0,1);
   lcd.print("Yes(*) / NO(#)");
-  while (key == ' ')  key = keypad.getKey();
+  while (KEY == ' ')  KEY = keypad.getKey();
   if (KEY == '*'){
     Winding (10,20); 
   }
@@ -108,10 +110,10 @@ void MC () {
  
   digitalWrite(DIR1, HIGH);
   digitalWrite(DIR2, LOW);
-  if (key == 'A') {
+  if (KEY == 'A') {
     digitalWrite(DIR1, HIGH);
     digitalWrite(DIR2, LOW);
-    while (key == 'A') {
+    while (KEY == 'A') {
       digitalWrite(STEP1, HIGH);
       delay(DELAY_STEPS1);
       digitalWrite(STEP1, LOW);
@@ -121,14 +123,14 @@ void MC () {
       delay(DELAY_STEPS2);
       digitalWrite(STEP2, LOW);
       delay(DELAY_STEPS2); 
-      key=keypad.getKey();   
+      KEY=keypad.getKey();   
     }   
   }
 
-  else if (key == 'B') {
+  else if (KEY == 'B') {
     digitalWrite(DIR1,LOW);
     digitalWrite(DIR2, HIGH);
-    while (key == 'A') {
+    while (KEY == 'A') {
       digitalWrite(STEP1, HIGH);
       delay(DELAY_STEPS1);
       digitalWrite(STEP1, LOW);
@@ -138,16 +140,18 @@ void MC () {
       delay(DELAY_STEPS2);
       digitalWrite(STEP2, LOW);
       delay(DELAY_STEPS2);
-      key=keypad.getKey();      
+      KEY=keypad.getKey();      
     }
   }
-  else if (key == 'C') {
+  else if (KEY == 'C') {
     digitalWrite(DIR1, LOW);
-    while (key == 'C') {
+    while (KEY == 'C') {
       digitalWrite(STEP1, HIGH);
       delay(DELAY_STEPS1);
       digitalWrite(STEP1, LOW);
       delay(DELAY_STEPS1);
+      KEY=keypad.getKey();
+    }
   }
   else {
  //Что-то с концевиком   
